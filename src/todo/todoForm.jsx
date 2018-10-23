@@ -3,7 +3,7 @@ import { connect,  } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 // Actions
-import { changeDescription } from './todoActions'
+import { changeDescription, search } from './todoActions'
 
 import Grid from '../template/grid'
 import IconButton from '../template/iconButton'
@@ -13,6 +13,11 @@ class TodoForm extends Component{
     super(props)
     this.keyHandle = this.keyHandle.bind(this)
   }
+
+  componentWillMount(){
+    this.props.search()
+  }
+
   keyHandle(e){
     if( e.key === 'Enter' ){
       e.shiftKey ? this.props.handleSearch() : this.props.handleAdd()
@@ -43,6 +48,9 @@ class TodoForm extends Component{
 }
 
 const mapStateToProps = state => ({description: state.todo.description})
-const mapDispatchToProps = dispatch => bindActionCreators({changeDescription}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({
+  changeDescription,
+  search
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoForm)
