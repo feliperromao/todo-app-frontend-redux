@@ -14,3 +14,27 @@ export const search = () => {
     payload: request
   }
 }
+
+/**
+ * Action com o Middleware multi
+ * para retornar mais de uma action
+ */
+export const _add = description => {
+  const request = axios.post(URL, {description})
+  return [
+    {type: 'TODO_ADDED', payload: request},
+    search()
+  ]
+}
+
+/**
+ * Action com o Middleware thunk
+ * para chamar outroas action apos uma promise
+ */
+export const add = description => {
+  return dispatch => {
+    axios.post(URL, {description})
+      .then( res => dispatch({type: 'TODO_ADDED', payload: res.data }))
+      .then( resp => dispatch( search() ) )
+  }
+}

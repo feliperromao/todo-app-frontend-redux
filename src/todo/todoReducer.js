@@ -8,7 +8,9 @@ export default function(state = INITIAL_VALUE, action){
     case 'DESCRIPTION_CHANGED':
       return { ...state, description: action.payload }; break;
     case 'TODO_SEARCHED':
-      return{...state, list: action.payload.data }
+      return{...state, list: action.payload.data }; break;
+    case 'TODO_ADDED':
+      return { ...state, description: '' }; break;
     default: return state
   }
 }
