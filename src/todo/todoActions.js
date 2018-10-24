@@ -38,3 +38,26 @@ export const add = description => {
       .then( resp => dispatch( search() ) )
   }
 }
+
+
+export const checkDone = (todo) => {
+  return dispatch => {
+    axios.put(`${URL}/${todo._id}`, { ...todo, done: true })
+      .then( res => dispatch({ type: 'TODO_DONE', payload: res.data }))
+      .then( res => dispatch(search()))
+  }
+}
+
+export const checkUndone = (todo) => {
+  return dispatch => {
+    axios.put(`${URL}/${todo._id}`, {...todo, done: false})
+      .then( () => dispatch(search()))
+  }
+}
+
+export const deleteTodo = todo => {
+  return dispatch => {
+    axios.delete(`${URL}/${todo._id}`)
+      .then( () => dispatch(search()) )
+  }
+}
